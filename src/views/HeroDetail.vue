@@ -4,7 +4,7 @@
     <h1 className="heading">{{ hero.localized_name }}</h1>
       <div className="hero-image-container">
         <img
-          alt={hero.name}
+          :alt="hero.name"
           :src="src"
           :style="{width: '20rem', borderColor: color}"
         />
@@ -36,8 +36,6 @@ export default {
       const { data } = await axios("https://api.opendota.com/api/heroes/")
       hero.value = data.find(hero => hero.localized_name === route.params.name)
       loading.value = false
-    })
-    onUpdated(() => {
       src.value = `https://cdn.dota2.com/apps/dota2/images/heroes/${hero.value.name.split("_dota_hero_")[1]}_full.png`
       roles.value = hero.value.roles.reduce((acc, cur) => acc + " - " + cur, "")
       switch(hero.value.primary_attr) {
@@ -47,12 +45,7 @@ export default {
       }
     })
     return {
-      hero,
-      loading,
-      src,
-      roles,
-      color,
-      attr
+      hero, loading, src, roles, color, attr
     }
   }
 }
